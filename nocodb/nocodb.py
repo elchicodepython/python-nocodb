@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-
+from typing import Optional
 
 """
 License MIT
@@ -87,5 +87,50 @@ class NocoDBClient:
     @abstractmethod
     def table_row_list(
         self, project: NocoDBProject, table: str, filter_obj=None, params=None
+    ) -> dict:
+        pass
+
+    @abstractmethod
+    def table_row_list(
+        self,
+        project: NocoDBProject,
+        table: str,
+        filter_obj: Optional[WhereFilter] = None,
+        params: Optional[dict] = None,
+    ) -> dict:
+        pass
+
+    @abstractmethod
+    def table_row_create(
+        self, project: NocoDBProject, table: str, body: dict
+    ) -> dict:
+        pass
+
+    @abstractmethod
+    def table_row_detail(
+        self, project: NocoDBProject, table: str, row_id: int
+    ) -> dict:
+        pass
+
+    @abstractmethod
+    def table_row_update(
+        self, project: NocoDBProject, table: str, row_id: int, body: dict
+    ) -> dict:
+        pass
+
+    @abstractmethod
+    def table_row_delete(
+        self, project: NocoDBProject, table: str, row_id: int
+    ) -> int:
+        pass
+
+    @abstractmethod
+    def table_row_nested_relations_list(
+        self,
+        project: NocoDBProject,
+        table: str,
+        relation_type: str,
+        row_id: int,
+        column_name: str,
     ) -> dict:
         pass

@@ -76,3 +76,11 @@ class NocoDBRequestsClient(NocoDBClient):
                 project, table, relation_type, row_id, column_name
             )
         ).json()
+
+    def project_create(
+        self,
+        body
+    ):
+        return self.__session.post(
+            self.__api_info.get_project_uri(), json=body
+        ).json()

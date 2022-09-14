@@ -29,6 +29,36 @@ client = NocoDBRequestsClient(
 )
 ```
 
+### Project creation
+```python
+project_body = {
+    "title": "MyProject",
+    "bases": [
+        {
+            "type": "pg",
+            "config": {
+                "client": "pg",
+                "connection": {
+                    "host": "localhost",
+                    "port": "5432",
+                    "user": "postgres",
+                    "password": "postgres",
+                    "database": "postgres"
+                },
+                "searchPath": [
+                    "public"
+                ]
+            },
+            "inflection_column": "camelize",
+            "inflection_table": "camelize"
+        }
+    ],
+    "external": True
+}
+
+project = client.project_create(body=project_body)
+```
+
 ### Project selection
 ```python
 # Be very carefull with org, project_name and table names

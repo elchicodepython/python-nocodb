@@ -1,5 +1,6 @@
 from typing import Optional
 from ..nocodb import (
+    JWTAuthToken,
     NocoDBClient,
     NocoDBProject,
     AuthToken,
@@ -12,13 +13,33 @@ import requests
 
 
 class NocoDBRequestsClient(NocoDBClient):
-    def __init__(self, auth_token: AuthToken, base_uri: str):
+    def __init__(
+        self,
+        base_uri: str,
+        auth_token: AuthToken = None,
+        email: str = None,
+        password: str = None,
+    ):
         self.__session = requests.Session()
-        self.__session.headers.update(
-            auth_token.get_header(),
-        )
-        self.__session.headers.update({"Content-Type": "application/json"})
         self.__api_info = NocoDBAPI(base_uri)
+
+        if not auth_token and not (email and password):
+            raise ValueError("Either сredentials or token must be provided")
+
+        if not auth_token and (email and password):
+            auth_token = JWTAuthToken(self.get_auth_token(email, password))
+
+        self.__session.headers.update(
+                auth_token.get_header(),
+            )
+        self.__session.headers.update({"Content-Type": "application/json"})
+
+    def get_auth_token(self, email: str, password: str) -> str:
+        auth_token = self.__session.post(
+            self.__api_info.get_auth_uri(),
+            json=dict(email=email, password=password)
+        ).json()['token']
+        return auth_token
 
     def table_row_list(
         self,

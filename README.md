@@ -14,18 +14,27 @@ from nocodb.infra.requests_client import NocoDBRequestsClient
 
 # Usage with API Token
 client = NocoDBRequestsClient(
+        # Your nocodb root path
+        "http://localhost:8080",
         # Your API Token retrieved from NocoDB conf
         APIToken("YOUR-API-TOKEN"),
-        # Your nocodb root path
-        "http://localhost:8080"
 )
 
 # Usage with JWT Token
 client = NocoDBRequestsClient(
+        # Your nocodb root path
+        "http://localhost:8080",
         # Your API Token retrieved from NocoDB conf
         JWTAuthToken("your.jwt.token"),
+)
+
+# Usage with email and password
+client = NocoDBRequestsClient(
         # Your nocodb root path
-        "http://localhost:8080"
+        "http://localhost:8080",
+        # Your profile credentials
+        email="admin@example.com",
+        password="123qwe123!"
 )
 ```
 

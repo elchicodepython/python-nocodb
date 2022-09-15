@@ -4,12 +4,23 @@ from .nocodb import NocoDBProject
 
 class NocoDBAPIUris(Enum):
     V1_DB_DATA_PREFIX = "api/v1/db/data"
+    V1_AUTH_USER_PREFIX = "api/v1/auth/user"
 
 
 class NocoDBAPI:
     def __init__(self, base_uri: str):
         self.__base_data_uri = (
             f"{base_uri}/{NocoDBAPIUris.V1_DB_DATA_PREFIX.value}"
+        )
+        self.__base_auth_uri = (
+            f"{base_uri}/{NocoDBAPIUris.V1_AUTH_USER_PREFIX.value}"
+        )
+    def get_auth_uri(self):
+        return "/".join(
+            (
+                self.__base_auth_uri,
+                "signin"
+            )
         )
 
     def get_table_uri(self, project: NocoDBProject, table: str) -> str:

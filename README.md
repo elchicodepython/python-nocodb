@@ -31,6 +31,10 @@ client = NocoDBRequestsClient(
 
 ### Project creation
 ```python
+# Example with default database
+project_body = {"title": "My new project"}
+
+# Example with Postgresql
 project_body = {
     "title": "MyProject",
     "bases": [
@@ -124,4 +128,6 @@ Feel free to add new capabilities by creating a new MR.
 
 ## Contributors
 
-- Samuel López Saura
+- Samuel López Saura @elchicodepython
+- Ilya Sapunov @davert0
+

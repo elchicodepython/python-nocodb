@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
    name='nocodb',
-   version='0.0.1',
+   version='0.1.0',
    author='Samuel López Saura',
    author_email='samuellopezsaura@gmail.com',
    packages=find_packages(),

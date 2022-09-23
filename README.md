@@ -134,6 +134,9 @@ Feel free to add new capabilities by creating a new MR.
 
 ## Contributors
 
+![Contributors image](https://contrib.rocks/image?repo=elchicodepython/python-nocodb)
+
+
 - Samuel López Saura @elchicodepython
 - Ilya Sapunov @davert0
 

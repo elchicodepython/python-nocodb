@@ -20,6 +20,11 @@ class NocoDBRequestsClient(NocoDBClient):
         self.__session.headers.update({"Content-Type": "application/json"})
         self.__api_info = NocoDBAPI(base_uri)
 
+    def _request(self, method, url, *args, **kwargs):
+        response = self.__session(method, url, *args, **kwargs)
+        response.raise_for_status()
+        return response
+
     def table_row_list(
         self,
         project: NocoDBProject,
@@ -27,39 +32,35 @@ class NocoDBRequestsClient(NocoDBClient):
         filter_obj: Optional[WhereFilter] = None,
         params: Optional[dict] = None,
     ) -> dict:
-
-        response = self.__session.get(
+        return self._request(
+            "GET",
             self.__api_info.get_table_uri(project, table),
             params=get_query_params(filter_obj, params),
-        )
-        return response.json()
-
-    def table_row_create(
-        self, project: NocoDBProject, table: str, body: dict
-    ) -> dict:
-        return self.__session.post(
-            self.__api_info.get_table_uri(project, table), json=body
         ).json()
 
-    def table_row_detail(
-        self, project: NocoDBProject, table: str, row_id: int
-    ) -> dict:
-        return self.__session.get(
+    def table_row_create(self, project: NocoDBProject, table: str, body: dict) -> dict:
+        return self._request(
+            "POST", self.__api_info.get_table_uri(project, table), json=body
+        ).json()
+
+    def table_row_detail(self, project: NocoDBProject, table: str, row_id: int) -> dict:
+        return self._request(
+            "GET",
             self.__api_info.get_row_detail_uri(project, table, row_id),
         ).json()
 
     def table_row_update(
         self, project: NocoDBProject, table: str, row_id: int, body: dict
     ) -> dict:
-        return self.__session.patch(
+        return self._request(
+            "PATCH",
             self.__api_info.get_row_detail_uri(project, table, row_id),
             json=body,
         ).json()
 
-    def table_row_delete(
-        self, project: NocoDBProject, table: str, row_id: int
-    ) -> int:
-        return self.__session.delete(
+    def table_row_delete(self, project: NocoDBProject, table: str, row_id: int) -> int:
+        return self._request(
+            "DELETE",
             self.__api_info.get_row_detail_uri(project, table, row_id),
         ).json()
 
@@ -71,16 +72,14 @@ class NocoDBRequestsClient(NocoDBClient):
         row_id: int,
         column_name: str,
     ) -> dict:
-        return self.__session.get(
+        return self._request(
+            "GET",
             self.__api_info.get_nested_relations_rows_list_uri(
                 project, table, relation_type, row_id, column_name
-            )
+            ),
         ).json()
 
-    def project_create(
-        self,
-        body
-    ):
-        return self.__session.post(
-            self.__api_info.get_project_uri(), json=body
+    def project_create(self, body):
+        return self._request(
+            "POST", self.__api_info.get_project_uri(), json=body
         ).json()

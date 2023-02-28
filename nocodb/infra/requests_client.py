@@ -21,7 +21,7 @@ class NocoDBRequestsClient(NocoDBClient):
         self.__api_info = NocoDBAPI(base_uri)
 
     def _request(self, method, url, *args, **kwargs):
-        response = self.__session(method, url, *args, **kwargs)
+        response = self.__session.request(method, url, *args, **kwargs)
         response.raise_for_status()
         return response
 

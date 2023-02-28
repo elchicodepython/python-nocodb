@@ -26,6 +26,14 @@ class NocoDBAPI:
             )
         )
 
+    def get_table_count_uri(self, project: NocoDBProject, table: str) -> str:
+        return "/".join(
+            (
+                self.get_table_uri(project, table),
+                'count'
+            )
+        )
+
     def get_row_detail_uri(
         self, project: NocoDBProject, table: str, row_id: int
     ):

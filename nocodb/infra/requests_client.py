@@ -76,6 +76,19 @@ class NocoDBRequestsClient(NocoDBClient):
             params=get_query_params(filter_obj),
         ).json()
 
+    def table_find_one(
+        self,
+        project: NocoDBProject,
+        table: str,
+        filter_obj: Optional[WhereFilter] = None,
+        params: Optional[dict] = None,
+    ) -> dict:
+        return self._request(
+            "GET",
+            self.__api_info.get_table_find_one_uri(project, table),
+            params=get_query_params(filter_obj, params),
+        ).json()
+
     def table_row_nested_relations_list(
         self,
         project: NocoDBProject,

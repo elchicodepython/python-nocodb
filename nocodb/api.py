@@ -34,6 +34,14 @@ class NocoDBAPI:
             )
         )
 
+    def get_table_find_one_uri(self, project: NocoDBProject, table: str) -> str:
+        return "/".join(
+            (
+                self.get_table_uri(project, table),
+                'find-one'
+            )
+        )
+
     def get_row_detail_uri(
         self, project: NocoDBProject, table: str, row_id: int
     ):

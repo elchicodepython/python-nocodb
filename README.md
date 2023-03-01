@@ -102,7 +102,7 @@ table_rows = client.table_row_list(project, table_name, InFilter("name", "sam"))
 table_rows = client.table_row_list(project, table_name, filter_obj=EqFilter("Id", 100))
 
 # Filter and count rows
-count = = client.table_count(project, table_name, filter_obj=EqFilter("Id", 100))
+count = client.table_count(project, table_name, filter_obj=EqFilter("Id", 100))
 
 # Find one row
 table_row = client.table_find_one(project, table_name, filter_obj=EqFilter("Id", 100), params={"sort": "-created_at"})

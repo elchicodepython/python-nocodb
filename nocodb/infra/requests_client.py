@@ -132,3 +132,33 @@ class NocoDBRequestsClient(NocoDBClient):
             url=self.__api_info.get_table_uri(tableId, "reorder"),
             json={ "order": order }
         ).json()
+    
+    def table_column_create(
+        self, tableId: str, body: dict,
+    ) -> dict:
+        return self.__session.post(
+            url=self.__api_info.get_table_uri(tableId, "columns"),
+            json=body,
+        ).json()
+
+    def table_column_update(
+        self, columnId: str, body: dict,
+    ) -> dict:
+        return self.__session.patch(
+            url=self.__api_info.get_column_uri(columnId),
+            json=body,
+        ).json()
+
+    def table_column_delete(
+        self, columnId: str,
+    ) -> dict:
+        return self.__session.delete(
+            url=self.__api_info.get_column_uri(columnId)
+        ).json()
+
+    def table_column_set_primary(
+        self, columnId: str,
+    ) -> bool:
+        return self.__session.post(
+            url=self.__api_info.get_column_uri(columnId, "primary"),
+        ).json()

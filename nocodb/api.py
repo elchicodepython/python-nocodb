@@ -82,3 +82,17 @@ class NocoDBAPI:
                 tableId,
             ] + additional_path
         ))
+    
+    def get_column_uri(
+        self, columnId: str, operation: str = None,
+    ) -> str:
+        additional_path = []
+        if operation is not None:
+            additional_path.append(operation)
+
+        return urljoin(self.__base_meta_uri, "/".join(
+            [
+                "columns",
+                columnId,
+            ] + additional_path
+        ))

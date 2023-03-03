@@ -157,8 +157,8 @@ class NocoDBClient:
 
     @abstractmethod
     def table_update(
-        self, tableId: str, body: dict
-    ):
+        self, tableId: str, body: dict,
+    ) -> bool:
         pass
 
     @abstractmethod
@@ -169,6 +169,30 @@ class NocoDBClient:
 
     @abstractmethod
     def table_reorder(
-        self, tableId: str, order: int
+        self, tableId: str, order: int,
+    ) -> dict:
+        pass
+
+    @abstractmethod
+    def table_column_create(
+        self, tableId: str, body: dict,
+    ) -> dict:
+        pass
+
+    @abstractmethod
+    def table_column_update(
+        self, columnId: str, body: dict,
+    ) -> dict:
+        pass
+
+    @abstractmethod
+    def table_column_delete(
+        self, columnId: str,
+    ) -> dict:
+        pass
+
+    @abstractmethod
+    def table_column_set_primary(
+        self, columnId: str,
     ) -> dict:
         pass

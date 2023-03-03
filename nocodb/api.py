@@ -57,3 +57,28 @@ class NocoDBAPI:
         self,
     ) -> str:
         return urljoin(self.__base_meta_uri, "projects")
+
+    def get_project_tables_uri(
+        self, project: NocoDBProject,
+    ) -> str:
+        return urljoin(self.__base_meta_uri, "/".join(
+            (
+                "projects",
+                project.project_name,
+                "tables"
+            )
+        ))
+    
+    def get_table_uri(
+        self, tableId: str, operation: str = None,
+    ) -> str:
+        additional_path = []
+        if operation is not None:
+            additional_path.append(operation)
+
+        return urljoin(self.__base_meta_uri, "/".join(
+            [
+                "tables",
+                tableId,
+            ] + additional_path
+        ))

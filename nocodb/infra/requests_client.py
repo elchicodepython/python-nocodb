@@ -84,3 +84,51 @@ class NocoDBRequestsClient(NocoDBClient):
         return self.__session.post(
             self.__api_info.get_project_uri(), json=body
         ).json()
+
+    def table_create(
+        self, project: NocoDBProject, body: dict
+    ) -> dict:
+        return self.__session.post(
+            url=self.__api_info.get_project_tables_uri(project),
+            json=body,
+        ).json()
+
+    def table_list(
+        self,
+        project: NocoDBProject,
+        params: Optional[dict] = None,
+    ) -> dict:
+        return self.__session.get(
+            url=self.__api_info.get_project_tables_uri(project),
+            params=params,
+        ).json()
+
+    def table_read(
+        self, tableId: str,
+    ) -> dict:
+        return self.__session.get(
+            url=self.__api_info.get_table_uri(tableId)
+        ).json()
+
+    def table_update(
+        self, tableId: str, body: dict
+    ):
+        return self.__session.patch(
+            url=self.__api_info.get_table_uri(tableId),
+            json=body,
+        ).json()
+
+    def table_delete(
+        self, tableId: str,
+    ) -> dict:
+        return self.__session.delete(
+            url=self.__api_info.get_table_uri(tableId)
+        ).json()
+
+    def table_reorder(
+        self, tableId: str, order: int
+    ) -> dict:
+        return self.__session.post(
+            url=self.__api_info.get_table_uri(tableId, "reorder"),
+            json={ "order": order }
+        ).json()

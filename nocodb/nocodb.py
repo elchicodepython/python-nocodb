@@ -134,3 +134,41 @@ class NocoDBClient:
         column_name: str,
     ) -> dict:
         pass
+
+    @abstractmethod
+    def table_create(
+        self, project: NocoDBProject, body: dict
+    ) -> dict:
+        pass
+
+    @abstractmethod
+    def table_list(
+        self,
+        project: NocoDBProject,
+        params: Optional[dict] = None,
+    ) -> dict:
+        pass
+
+    @abstractmethod
+    def table_read(
+        self, tableId: str,
+    ) -> dict:
+        pass
+
+    @abstractmethod
+    def table_update(
+        self, tableId: str, body: dict
+    ):
+        pass
+
+    @abstractmethod
+    def table_delete(
+        self, tableId: str,
+    ) -> dict:
+        pass
+
+    @abstractmethod
+    def table_reorder(
+        self, tableId: str, order: int
+    ) -> dict:
+        pass

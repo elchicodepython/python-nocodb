@@ -139,4 +139,5 @@ Feel free to add new capabilities by creating a new MR.
 
 - Samuel López Saura @elchicodepython
 - Ilya Sapunov @davert0
+- Delena Malan @delenamalan
 

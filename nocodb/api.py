@@ -69,7 +69,7 @@ class NocoDBAPI:
             )
         ))
     
-    def get_table_uri(
+    def get_table_meta_uri(
         self, tableId: str, operation: str = None,
     ) -> str:
         additional_path = []

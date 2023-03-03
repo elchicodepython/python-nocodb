@@ -107,14 +107,14 @@ class NocoDBRequestsClient(NocoDBClient):
         self, tableId: str,
     ) -> dict:
         return self.__session.get(
-            url=self.__api_info.get_table_uri(tableId)
+            url=self.__api_info.get_table_meta_uri(tableId)
         ).json()
 
     def table_update(
         self, tableId: str, body: dict
     ):
         return self.__session.patch(
-            url=self.__api_info.get_table_uri(tableId),
+            url=self.__api_info.get_table_meta_uri(tableId),
             json=body,
         ).json()
 
@@ -122,14 +122,14 @@ class NocoDBRequestsClient(NocoDBClient):
         self, tableId: str,
     ) -> dict:
         return self.__session.delete(
-            url=self.__api_info.get_table_uri(tableId)
+            url=self.__api_info.get_table_meta_uri(tableId)
         ).json()
 
     def table_reorder(
         self, tableId: str, order: int
     ) -> dict:
         return self.__session.post(
-            url=self.__api_info.get_table_uri(tableId, "reorder"),
+            url=self.__api_info.get_table_meta_uri(tableId, "reorder"),
             json={ "order": order }
         ).json()
     
@@ -137,7 +137,7 @@ class NocoDBRequestsClient(NocoDBClient):
         self, tableId: str, body: dict,
     ) -> dict:
         return self.__session.post(
-            url=self.__api_info.get_table_uri(tableId, "columns"),
+            url=self.__api_info.get_table_meta_uri(tableId, "columns"),
             json=body,
         ).json()
 

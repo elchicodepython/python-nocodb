@@ -101,6 +101,12 @@ table_rows = client.table_row_list(project, table_name, params={'offset': 100})
 table_rows = client.table_row_list(project, table_name, InFilter("name", "sam"))
 table_rows = client.table_row_list(project, table_name, filter_obj=EqFilter("Id", 100))
 
+# Filter and count rows
+count = client.table_count(project, table_name, filter_obj=EqFilter("Id", 100))
+
+# Find one row
+table_row = client.table_find_one(project, table_name, filter_obj=EqFilter("Id", 100), params={"sort": "-created_at"})
+
 # Retrieve a single row
 row_id = 10
 row = client.table_row_detail(project, table_name, row_id)

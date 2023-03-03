@@ -21,16 +21,14 @@ class NocoDBRequestsClient(NocoDBClient):
         self.__session.headers.update({"Content-Type": "application/json"})
         self.__api_info = NocoDBAPI(base_uri)
 
-    def _request(self, method, url, *args, **kwargs):
+    def _request(self, method: str, url: str, *args, **kwargs):
         response = self.__session.request(method, url, *args, **kwargs)
         try:
             response.raise_for_status()
-        except requests.exceptions.HTTPError as http_error:
+            response_json = response.json()
+        except requests.exceptions.JSONDecodeError:
             response_json = None
-            try:
-                response_json = response.json()
-            except requests.exceptions.JSONDecodeError:
-                ...
+        except requests.exceptions.HTTPError as http_error:
             raise NocoDBAPIError(
                 message=str(http_error),
                 status_code=http_error.response.status_code,

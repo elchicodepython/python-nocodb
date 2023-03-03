@@ -7,6 +7,7 @@ from ..nocodb import (
 )
 from ..api import NocoDBAPI
 from ..utils import get_query_params
+from ..exceptions import NocoDBAPIError
 
 import requests
 
@@ -22,7 +23,21 @@ class NocoDBRequestsClient(NocoDBClient):
 
     def _request(self, method, url, *args, **kwargs):
         response = self.__session.request(method, url, *args, **kwargs)
-        response.raise_for_status()
+        try:
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as http_error:
+            response_json = None
+            try:
+                response_json = response.json()
+            except requests.exceptions.JSONDecodeError:
+                ...
+            raise NocoDBAPIError(
+                message=str(http_error),
+                status_code=http_error.response.status_code,
+                response_json=response_json,
+                response_text=response.text
+            )
+
         return response
 
     def table_row_list(

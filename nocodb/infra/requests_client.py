@@ -126,7 +126,8 @@ class NocoDBRequestsClient(NocoDBClient):
     def table_create(
         self, project: NocoDBProject, body: dict
     ) -> dict:
-        return self.__session.post(
+        return self._request(
+            "POST",
             url=self.__api_info.get_project_tables_uri(project),
             json=body,
         ).json()
@@ -136,7 +137,8 @@ class NocoDBRequestsClient(NocoDBClient):
         project: NocoDBProject,
         params: Optional[dict] = None,
     ) -> dict:
-        return self.__session.get(
+        return self._request(
+            "GET",
             url=self.__api_info.get_project_tables_uri(project),
             params=params,
         ).json()
@@ -144,14 +146,16 @@ class NocoDBRequestsClient(NocoDBClient):
     def table_read(
         self, tableId: str,
     ) -> dict:
-        return self.__session.get(
+        return self._request(
+            "GET",
             url=self.__api_info.get_table_meta_uri(tableId)
         ).json()
 
     def table_update(
         self, tableId: str, body: dict
     ):
-        return self.__session.patch(
+        return self._request(
+            "PATCH",
             url=self.__api_info.get_table_meta_uri(tableId),
             json=body,
         ).json()
@@ -159,14 +163,16 @@ class NocoDBRequestsClient(NocoDBClient):
     def table_delete(
         self, tableId: str,
     ) -> dict:
-        return self.__session.delete(
+        return self._request(
+            "DELETE",
             url=self.__api_info.get_table_meta_uri(tableId)
         ).json()
 
     def table_reorder(
         self, tableId: str, order: int
     ) -> dict:
-        return self.__session.post(
+        return self._request(
+            "POST",
             url=self.__api_info.get_table_meta_uri(tableId, "reorder"),
             json={ "order": order }
         ).json()
@@ -174,7 +180,8 @@ class NocoDBRequestsClient(NocoDBClient):
     def table_column_create(
         self, tableId: str, body: dict,
     ) -> dict:
-        return self.__session.post(
+        return self._request(
+            "POST",
             url=self.__api_info.get_table_meta_uri(tableId, "columns"),
             json=body,
         ).json()
@@ -182,7 +189,8 @@ class NocoDBRequestsClient(NocoDBClient):
     def table_column_update(
         self, columnId: str, body: dict,
     ) -> dict:
-        return self.__session.patch(
+        return self._request(
+            "PATCH",
             url=self.__api_info.get_column_uri(columnId),
             json=body,
         ).json()
@@ -190,13 +198,15 @@ class NocoDBRequestsClient(NocoDBClient):
     def table_column_delete(
         self, columnId: str,
     ) -> dict:
-        return self.__session.delete(
+        return self._request(
+            "DELETE",
             url=self.__api_info.get_column_uri(columnId)
         ).json()
 
     def table_column_set_primary(
         self, columnId: str,
     ) -> bool:
-        return self.__session.post(
+        return self._request(
+            "POST",
             url=self.__api_info.get_column_uri(columnId, "primary"),
         ).json()

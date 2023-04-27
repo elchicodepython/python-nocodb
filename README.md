@@ -185,6 +185,28 @@ table_rows = client.table_row_list(project, table_name, ExactDateEqFilter('colum
 table_rows = client.table_row_list(project, table_name, ExactDateOpFilter('column', '2023-06-01', op='eq'))
 ```
 
+```python
+from nocodb import filters
+
+# Basic filters...
+nick_filter = filters.EqFilter("nickname", "elchicodepython")
+country_filter = filters.EqFilter("country", "es")
+girlfriend_code = filters.EqFilter("gfcode", "404")
+current_mood_code = filters.EqFilter("moodcode", "418")
+
+# Combining filters using logical filters
+or_filter = filters.Or(nick_filter, country_filter)
+and_filter = filters.And(girlfriend_code, current_mood_code)
+
+# Negating filters with a Not filter
+not_me = filters.Not(filters.EqFilter("nickname", "elchicodepython"))
+
+# You can also combine combinations
+or_combined_filter = filters.Or(or_filter, and_filter)
+and_combined_filter = filters.And(or_filter, and_filter)
+
+```
+
 Credits to @MitPitt for asking this feature.
 
 ## Author notes

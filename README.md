@@ -143,7 +143,7 @@ client.table_row_delete(project, table_name, row_id)
 
 ### Using custom filters
 
-Nocodb is evolving and new operators are comming with each release.
+Nocodb is evolving and new operators are coming with each release.
 
 Most of the basic operations are inside this package but you could need some new
 feature that could not be added yet.

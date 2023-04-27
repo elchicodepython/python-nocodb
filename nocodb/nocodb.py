@@ -54,29 +54,6 @@ class WhereFilter(ABC):
         pass
 
 
-"""This could be great but actually I don't know how to join filters in the
-NocoDB DSL. I event don't know if this is possible through the current API.
-I hope they add docs about it soon.
-
-class NocoDBWhere:
-
-    def __init__(self):
-        self.__filter_array: List[WhereFilter] = []
-
-    def add_filter(self, where_filter: WhereFilter) -> NocoDBWhere:
-        self.__filter_array.append(
-                where_filter
-        )
-        return self
-
-    def get_where(self) -> str:
-        return '&'.join([filter_.get_where() for filter_ in self.__filter_array])
-
-    def __str__(self):
-        return f'Where: "{self.get_where()}"'
-"""
-
-
 class NocoDBProject:
     def __init__(self, org_name: str, project_name: str):
         self.project_name = project_name

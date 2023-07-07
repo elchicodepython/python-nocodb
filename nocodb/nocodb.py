@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from pathlib import Path
 from typing import Optional
 
 """
@@ -172,4 +173,10 @@ class NocoDBClient:
     def table_column_set_primary(
         self, columnId: str,
     ) -> dict:
+        pass
+
+    @abstractmethod
+    def upload_file(
+        self, project: NocoDBProject, table: str, row_id: int, column_id: str, file: Path
+    ):
         pass

@@ -127,6 +127,11 @@ client.table_row_update(project, table_name, row_id, row_info)
 
 # Delete a row (only if you've already bought me a beer)
 client.table_row_delete(project, table_name, row_id)
+
+# Upload a file to an attachment field
+image_path = "path/to/new_car.png"
+image_column = "images"
+client.upload_file(project, table, row_id, image_column, image_path)
 ```
 
 ### Available filters

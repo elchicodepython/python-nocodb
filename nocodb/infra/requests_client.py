@@ -103,6 +103,22 @@ class NocoDBRequestsClient(NocoDBClient):
             params=get_query_params(filter_obj, params),
         ).json()
 
+    def table_row_relation_create(
+        self,
+        project: NocoDBProject,
+        table: str,
+        relation_type: str,
+        row_id: int,
+        column_name: str,
+        ref_row_id: int,
+    ) -> dict:
+        return self._request(
+            "POST",
+            self.__api_info.get_row_relation_create_uri(
+                project, table, relation_type, row_id, column_name, ref_row_id
+            ),
+        ).json()
+
     def table_row_nested_relations_list(
         self,
         project: NocoDBProject,

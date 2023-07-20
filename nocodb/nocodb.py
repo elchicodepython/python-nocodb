@@ -32,7 +32,7 @@ class AuthToken(ABC):
         pass
 
 
-class APIToken:
+class APIToken(AuthToken):
     def __init__(self, token: str):
         self.__token = token
 
@@ -40,7 +40,7 @@ class APIToken:
         return {"xc-token": self.__token}
 
 
-class JWTAuthToken:
+class JWTAuthToken(AuthToken):
     def __init__(self, token: str):
         self.__token = token
 

@@ -89,12 +89,28 @@ table_name = "tablename"
 # Retrieve a page of rows from a table
 table_rows = client.table_row_list(project, table_name)
 
-# Retrieve the first 10000 rows
-table_rows = client.table_row_list(project, table_name, params={'limit': 10000})
+# Retrieve the first 1000 rows
+table_rows = client.table_row_list(project, table_name, params={'limit': 1000})
 
 # Skip 100 rows
 table_rows = client.table_row_list(project, table_name, params={'offset': 100})
+```
 
+⚠️ Seems that we can't retrieve more than 1000 rows at the same time but we can paginate
+ to retrieve all the rows from a table
+
+Pagination example
+
+```python
+
+first_100_rows = client.table_row_list(project, table_name, params={'limit': 100})
+next_100_rows = client.table_row_list(project, table_name, params={'limit': 100, 'offset': 100})
+next_100_rows = client.table_row_list(project, table_name, params={'limit': 100, 'offset': 200})
+```
+
+More row operations
+
+```python
 # Filter the query
 table_rows = client.table_row_list(project, table_name, LikeFilter("name", "%sam%"))
 table_rows = client.table_row_list(project, table_name, And(LikeFilter("name", "%sam%"), EqFilter("age", 26)))

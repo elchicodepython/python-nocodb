@@ -7,11 +7,7 @@ class Or(WhereFilter):
         self.__filters = filters
 
     def get_where(self) -> str:
-        return (
-            "("
-            + "~or".join([filter.get_where() for filter in self.__filters])
-            + ")"
-        )
+        return f"({'~or'.join([filter.get_where() for filter in self.__filters])})"
 
 
 class And(WhereFilter):
@@ -19,11 +15,7 @@ class And(WhereFilter):
         self.__filters = filters
 
     def get_where(self) -> str:
-        return (
-            "("
-            + "~and".join([filter.get_where() for filter in self.__filters])
-            + ")"
-        )
+        return f"({'~and'.join([filter.get_where() for filter in self.__filters])})"
 
 
 class Not(WhereFilter):
@@ -31,4 +23,4 @@ class Not(WhereFilter):
         self.__filter = filter
 
     def get_where(self) -> str:
-        return "~not" + self.__filter.get_where()
+        return f"~not{self.__filter.get_where()}"

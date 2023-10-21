@@ -3,6 +3,8 @@
 NocoDB is a great Airtable alternative. This client allows python developers
 to use NocoDB API in a simple way.
 
+- [Contributors guidelines](contributors.md)
+
 ## Installation
 
 ```bash

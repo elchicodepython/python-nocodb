@@ -102,6 +102,17 @@ class NocoDBClient:
         pass
 
     @abstractmethod
+    def table_row_relation_create(
+        self,
+        project: NocoDBProject,
+        relation_type: str,
+        row_id: int,
+        column_name: str,
+        ref_row_id: int,
+    ) -> dict:
+        pass
+
+    @abstractmethod
     def table_row_nested_relations_list(
         self,
         project: NocoDBProject,

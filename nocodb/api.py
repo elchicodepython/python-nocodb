@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Optional
 from urllib.parse import urljoin
 from .nocodb import NocoDBProject
 
@@ -50,6 +51,27 @@ class NocoDBAPI:
             )
         ))
 
+    def get_row_relation_create_uri(
+        self,
+        project: NocoDBProject,
+        table: str,
+        relation_type: str,
+        row_id: int,
+        column_name: str,
+        ref_row_id: int,
+    ) -> str:
+        return urljoin(self.__base_data_uri, "/".join(
+            (
+                project.org_name,
+                project.project_name,
+                table,
+                str(row_id),
+                relation_type,
+                column_name,
+                str(ref_row_id),
+            )
+        ))
+
     def get_nested_relations_rows_list_uri(
         self,
         project: NocoDBProject,
@@ -86,7 +108,7 @@ class NocoDBAPI:
         ))
     
     def get_table_meta_uri(
-        self, tableId: str, operation: str = None,
+        self, tableId: str, operation: Optional[str] = None,
     ) -> str:
         additional_path = []
         if operation is not None:
@@ -100,7 +122,7 @@ class NocoDBAPI:
         ))
     
     def get_column_uri(
-        self, columnId: str, operation: str = None,
+        self, columnId: str, operation: Optional[str] = None,
     ) -> str:
         additional_path = []
         if operation is not None:

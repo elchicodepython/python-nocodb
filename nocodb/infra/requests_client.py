@@ -1,4 +1,5 @@
 from typing import Optional
+
 from ..nocodb import (
     NocoDBClient,
     NocoDBProject,
@@ -57,10 +58,10 @@ class NocoDBRequestsClient(NocoDBClient):
             "POST", self.__api_info.get_table_uri(project, table), json=body
         ).json()
 
-    def table_row_detail(self, project: NocoDBProject, table: str, row_id: int) -> dict:
+    def table_row_detail(self, project: NocoDBProject, table_id: str, row_id: int) -> dict:
         return self._request(
             "GET",
-            self.__api_info.get_row_detail_uri(project, table, row_id),
+            self.__api_info.get_row_detail_uri(project, table_id, row_id),
         ).json()
 
     def table_row_update(
@@ -210,3 +211,39 @@ class NocoDBRequestsClient(NocoDBClient):
             "POST",
             url=self.__api_info.get_column_uri(columnId, "primary"),
         ).json()
+
+    def upload_file(
+        self, project: NocoDBProject, table_id: str, row_id: int, column_name: str, path: str
+    ) -> dict:
+        """Upload a file to an Attachment field."""
+        content_type = self.__session.headers.get("Content-Type")
+        self.__session.headers.pop("Content-Type")
+
+        # Upload the file to NocoDB's storage.
+        upload_result = self._request(
+            "POST",
+            url=self.__api_info.get_storage_upload_uri(),
+            data={"path": self.__api_info.get_storage_upload_path(project, table_id, column_name)},
+            files={"file": open(path, "rb")}
+        ).json()
+        if len(upload_result) < 1:
+            raise ValueError("result of storage upload call doesn't contain the file info")
+        file_data = upload_result[0]
+
+        # Link the uploaded file to the given attachment file.
+        result = self.table_row_update(
+            project,
+            table_id,
+            row_id,
+            {
+                column_name: [{
+                    "path": file_data["path"],
+                    "title": file_data["title"],
+                    "size": file_data["size"],
+                }]
+            }
+        )
+        
+        self.__session.headers.update({"Content-Type": str(content_type)})
+        return result
+        

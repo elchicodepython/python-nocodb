@@ -6,12 +6,14 @@ from .nocodb import NocoDBProject
 class NocoDBAPIUris(Enum):
     V1_DB_DATA_PREFIX = "api/v1/db/data/"
     V1_DB_META_PREFIX = "api/v1/db/meta/"
+    V1_DB_STORAGE_PREFIX = "api/v1/db/storage/"
 
 
 class NocoDBAPI:
     def __init__(self, base_uri: str):
         self.__base_data_uri = urljoin(base_uri + "/", NocoDBAPIUris.V1_DB_DATA_PREFIX.value)
         self.__base_meta_uri = urljoin(base_uri + "/", NocoDBAPIUris.V1_DB_META_PREFIX.value)
+        self.__base_storage_uri = urljoin(base_uri + "/", NocoDBAPIUris.V1_DB_STORAGE_PREFIX.value)
 
     def get_table_uri(self, project: NocoDBProject, table: str) -> str:
         return urljoin(self.__base_data_uri, "/".join(
@@ -84,6 +86,24 @@ class NocoDBAPI:
                 "tables"
             )
         ))
+
+    def get_storage_upload_uri(
+        self,
+    ) -> str:
+        return urljoin(self.__base_storage_uri, "upload")
+    
+    def get_storage_upload_path(
+        self, project: NocoDBProject, table: str, column_id: str,
+    ) -> str:
+        """This Path/URL is used in the request body for uploading attachments."""
+        return urljoin(f"{project.org_name}/", "/".join(
+            [
+                project.project_name,
+                table,
+                column_id,
+            ]
+        ))
+
     
     def get_table_meta_uri(
         self, tableId: str, operation: str = None,

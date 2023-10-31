@@ -78,6 +78,14 @@ class NocoDBRequestsClient(NocoDBClient):
             self.__api_info.get_row_detail_uri(project, table, row_id),
         ).json()
 
+    def table_row_add_relation(self, project: NocoDBProject, table: str, row_id: int,
+                               column: str, rel_row_id: int,
+                               relation_type: str = 'hm') -> dict:
+        uri = f"{self.__api_info.get_row_detail_uri(project, table, row_id)}/{relation_type}/{column}/{rel_row_id}"
+        return self._request(
+            "POST", uri, json={}
+        ).json()
+
     def table_count(
         self,
         project: NocoDBProject,
